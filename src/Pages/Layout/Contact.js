@@ -2,8 +2,8 @@ import axios from "axios";
 
 import React, { useEffect, useState } from "react";
 export const Contact = () => {
+  const [user, setUser] = useState();
   const [id, setId] = useState();
-  const [user, setusers] = useState([]);
   const [firstName, setFirstName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -17,8 +17,8 @@ export const Contact = () => {
     axios
       .get("https://localhost:7195/api/Contacts/GetAllContact")
       .then((response) => {
-        console.log(response.data); // Log the response data
-        setusers(response.data); // Set the state with the array data
+        console.log(response);
+        setUser(response.data); // Log the response data // Set the state with the array data
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -58,7 +58,7 @@ export const Contact = () => {
         });
     } else {
       axios
-        .put("https://localhost:7195/api/Contacts/UpdateContact", {
+        .put(`https://localhost:7195/api/Contacts/UpdateContact?Id=${id}`, {
           firstName,
           email,
           password,
@@ -79,7 +79,7 @@ export const Contact = () => {
     debugger;
     e.preventDefault();
   };
-  const DeleteData = (id) => {
+  const DeleteCountry = (id) => {
     axios
       .delete("https://localhost:7195/api/Contacts/DeleteContact?Id=" + id)
       .then((res) => {
@@ -91,7 +91,7 @@ export const Contact = () => {
         console.log(error);
       });
   };
-  const EditData = (dataedit) => {
+  const EditCountry = (dataedit) => {
     setId(dataedit.id);
     setFirstName(dataedit.firstName);
     setEmail(dataedit.email);
@@ -208,6 +208,52 @@ export const Contact = () => {
             />
           </div>
         </form>
+        <div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Phone Number</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Country</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {user.map((val) => (
+                <tr key={val.id}>
+                  <td>{val.id}</td>
+                  <td>{val.firstName}</td>
+                  <td>{val.email}</td>
+                  <td>{val.password}</td>
+                  <td>{val.phoneNumber}</td>
+                  <td>{val.city}</td>
+                  <td>{val.state}</td>
+                  <td>{val.country}</td>
+
+                  <td>
+                    <button
+                      className="btn btn-primary me-2"
+                      onClick={() => EditCountry(val)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => DeleteCountry(val.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

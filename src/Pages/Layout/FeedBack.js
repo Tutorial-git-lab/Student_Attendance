@@ -1,21 +1,11 @@
 import React from "react";
-import StudentLogin from "./StudentLogin";
-import StaffLogin from "./StaffLogin";
 
 export default function FeedBack() {
   return (
     <>
       <div className="container-fluid my-3 border">
         <div className="row">
-          <div className=" col-4 d-flex-col">
-            <div className="container row">
-              <StudentLogin />
-            </div>
-            <div className="container my-2 row">
-              <StaffLogin />
-            </div>
-          </div>
-          <div className="col-8 flex-col">
+          <div className="col-12 flex-col">
             <form className=" container border border-success p-3">
               <div className="text-center my-3">
                 <h5 className="text-success">FeedBack Form</h5>
